@@ -66,6 +66,22 @@ func (Contractor) Unfasten(p NailPuller, nailSupply *int, b *Board) {
 	}
 }
 
+// ProcessBoards allowing a contractor to process more than a board at a time
+func (c Contractor) ProcessBoards(pd NailController, nailSupply *int, boards []Board) {
+	for i := range boards {
+		b := &boards[i]
+
+		fmt.Printf("Contractor checking with board #%d : %+v\n", i+1, b)
+
+		switch {
+		case b.NailsDriven < b.NailsNeeded:
+			c.Fasten(pd, nailSupply, b)
+		case b.NailsDriven > b.NailsNeeded:
+			c.Unfasten(pd, nailSupply, b)
+		}
+	}
+}
+
 func main() {
 	println("hellow world")
 }
